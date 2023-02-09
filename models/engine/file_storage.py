@@ -10,7 +10,7 @@ class FileStorage:
         __file_path: (str). path to the JSON file
         __objects: (dictionary). store all objects by <class name>.id
     """
-    __file_path = ''
+    __file_path = 'file.json'
     __objects = {}
 
     def all(self):
@@ -19,7 +19,7 @@ class FileStorage:
 
     def new(self, obj):
         """sets in __objects the obj with key object id"""
-        self.al()[type(obj).id] = obj
+        self.all()[obj.id] = obj.to_dict()
 
     def save(self):
         """serializes __objects to the JSON file (path: __file_path)"""
