@@ -10,12 +10,17 @@ class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
     stoorage = models.storage
     
-    def do_create(self, argv):
+    def do_create(self, class_create):
         """Creates a new instance of BaseModel, saves it (to JSON file)
         and prints the id"""
-        args = check_args(argv)
-        if args:
-    
+        if not class_create:
+            print("** class name is missing **)
+        else:
+            try:
+                  inst = class_create()
+            except:
+                  print("** class doesn't exist **)
+        return True
     def do_quit(self, qt):
         """Quit command to exit the program"""
         return True
