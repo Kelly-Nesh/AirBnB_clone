@@ -14,13 +14,34 @@ class HBNBCommand(cmd.Cmd):
         """Creates a new instance of BaseModel, saves it (to JSON file)
         and prints the id"""
         if not class_create:
-            print("** class name is missing **)
+            print("** class name is missing **")
+        elif class_create == 'BaseModel':
+            Base_insta = BaseModel()
+            Base_insta.save()
+            print(Base_insta.id)
         else:
-            try:
-                  inst = class_create()
-            except:
-                  print("** class doesn't exist **)
-        return True
+            print("** class doesn't exist **")
+
+    def do_show(self, class_show):
+        """Prints the string representation of an instance based on
+        the class name and id"""
+        class_show = class_show.split(' ')
+        if not class_show:
+            print("** class name missing **")
+        elif class_show[0] != "BaseModel":
+            print("** class doesn't exist **")
+        elif len(class_show) < 2:
+            print("** instance id missing **")
+        else:
+            models.engine.storage.reload()
+            saved = models.storage.all()
+            if class_show[1] not in saved:
+                print("** no instance found **")
+            else:
+                old = BaseModel(saved)
+                print(old)
+
+
     def do_quit(self, qt):
         """Quit command to exit the program"""
         return True
