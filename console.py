@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 import cmd
-
+import json
 import models
 from models.base_model import BaseModel
 """creating interactive console"""
@@ -59,6 +59,19 @@ class HBNBCommand(cmd.Cmd):
             else:
                 del(saved[class_destroy[1]])
                 models.engine.storage.save()
+
+    def do_all(self, class_all):
+        """Prints all string representations of instances based or not
+	on the class name. """
+        rt = []
+        if not class_all or class_all == 'BaseModel':
+                all_saved = models.engine.storage.all()
+                for s in all_saved.copy().items():
+                    insta = BaseModel(s)
+                    rt.append(str(insta))
+                print(rt)
+        elif class_all != 'BaseModel':
+                print("** class doesn't exist **")
 
     def help_show(self):
         print('\n'.join(["Takes two arguments: Class and Instance Id",
