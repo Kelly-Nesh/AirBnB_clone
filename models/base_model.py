@@ -7,7 +7,7 @@ attributes/methods for other classes"""
 
 
 class BaseModel:
-    """BaseModel"""
+    """Creating BaseModel class"""
 
     def __init__(self, *args, **kwargs):
         """Initializes id, and created at when BaseModel is instantiated
