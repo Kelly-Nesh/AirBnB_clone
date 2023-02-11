@@ -38,8 +38,13 @@ class HBNBCommand(cmd.Cmd):
             if class_show[1] not in saved:
                 print("** no instance found **")
             else:
-                old = BaseModel(saved)
-                print(old)
+                saved = saved[class_show[1]]
+                s_id = saved['id']
+                updated_at = saved['updated_at']
+                created_at = saved['created_at']
+                to_show = BaseModel(id=s_id, created_at=created_at, 
+                updated_at=updated_at)
+                print(to_show)
 
     def do_destroy(self, class_destroy):
         """Deletes an instance based on the class name and id
@@ -65,11 +70,12 @@ class HBNBCommand(cmd.Cmd):
 	on the class name. """
         rt = []
         if not class_all or class_all == 'BaseModel':
-                all_saved = models.engine.storage.all()
-                for s in all_saved.copy().items():
-                    insta = BaseModel(s)
-                    rt.append(str(insta))
-                print(rt)
+            all_saved = models.engine.storage.all()
+            for s in all_saved.copy().items():
+                str_insta = str(BaseModel(s))
+                rt.append(str_insta)
+            print(rt,'\n\n')
+            del(rt)
         elif class_all != 'BaseModel':
                 print("** class doesn't exist **")
 
@@ -80,6 +86,11 @@ class HBNBCommand(cmd.Cmd):
     def help_destroy(self):
     	print('\n'.join(["Deletes an instance based on the class name and id and saves changes.",
 	"Usage: ``destroy BaseModel 956b78db-80b5-45b2-9fa6-a98eda4f9043``"]))
+
+    def help_all(self):
+        print('\n'.join(["prints all string representation of all instances",
+	"whether specified class or not", 
+	"Usage: ``all BaseModel`` or ``all``"]))
     def do_quit(self, qt):
         """Quit command to exit the program"""
         return True
