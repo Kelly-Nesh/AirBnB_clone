@@ -1,10 +1,29 @@
 #!/usr/bin/python3
 import cmd
 import json
+
 import models
 from models.base_model import BaseModel
-"""creating interactive console"""
+from models.user import User
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.state import State
+from models.review import Review
 
+# A global constant because both function inside and outside uses it.
+CLASSES = [
+	"BaseModel",
+	"User",
+	"City",
+	"Place",
+	"State",
+	"Amenity",
+	"Review"
+]
+
+
+"""creating interactive console"""
 class HBNBCommand(cmd.Cmd):
     """Python interactive console"""
     prompt = "(hbnb) "
