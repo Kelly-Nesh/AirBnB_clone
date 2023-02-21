@@ -46,6 +46,7 @@ div.amenities h4 {
   font-size: 14px;
   margin: 4px auto;
   margin-left: 50px;
+  margin-bottom: 16px;
 }
 ul.popover {
   list-style: none;
