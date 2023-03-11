@@ -39,7 +39,8 @@ class FileStorage:
         If the file doesn’t exist, no exception should be raised)"""
         if FileStorage.__file_path:
             try:
-                with open(type(self).__file_path, 'r', encoding='utf-8') as jsf:
+                with open(type(self).__file_path, 'r',
+                          encoding='utf-8') as jsf:
                     try:
                         FileStorage.__objects = json.load(jsf)
                     except json.decoder.JSONDecodeError:
