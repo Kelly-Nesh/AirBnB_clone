@@ -6,11 +6,12 @@ from models.base_model import BaseModel
 from models import classes
 """creating interactive console"""
 
+
 class HBNBCommand(cmd.Cmd):
     """Python interactive console"""
     prompt = "(hbnb) "
     storage = models.storage
-    
+
     def do_create(self, class_create):
         """Creates a new instance of BaseModel, saves it (to JSON file)
         and prints the id"""
@@ -64,8 +65,8 @@ class HBNBCommand(cmd.Cmd):
                 models.storage.save()
 
     def do_all(self, class_all):
-        """Prints all string representations of instances based or not
-	on the class name."""
+        """Prints all string representations of instances based or
+        not on the class name."""
         rt = []
         if not class_all:
             for m in models.storage.all().values():
@@ -74,7 +75,6 @@ class HBNBCommand(cmd.Cmd):
         elif class_all not in classes:
             print("** class doesn't exist **")
 
-    
     def do_update(self, class_update):
         """Updates an instance based on class name and id by adding or updating
         attributes and saves the changes to json file"""
@@ -102,13 +102,13 @@ class HBNBCommand(cmd.Cmd):
     @staticmethod
     def type_cast(k):
         try:
-            k=int(k)
+            k = int(k)
         except ValueError:
             try:
-                k=float(k)
+                k = float(k)
             except ValueError:
                 try:
-                    k=str(k)
+                    k = str(k)
                 except ValueError:
                     pass
                 else:
@@ -117,19 +117,23 @@ class HBNBCommand(cmd.Cmd):
                 return k
         else:
             return k
+
     # HELP METHODS
     def help_show(self):
         print('\n'.join(["Takes two arguments: Class and Instance Id",
-        "Usage: ``show BaseModel 79734628-ebca-4188-81fe-932c7a967b84``"]))
-    
+                         "Usage: ``\
+                         show BaseModel <id>``"]))
+
     def help_destroy(self):
-    	print('\n'.join(["Deletes an instance based on the class name and id and saves changes.",
-	"Usage: ``destroy BaseModel 956b78db-80b5-45b2-9fa6-a98eda4f9043``"]))
+        print('\n'.join(["Deletes an instance based on the \
+                        class name and id and saves changes.",
+                        "Usage: \
+                        ``destroy BaseModel <id>``"]))
 
     def help_all(self):
         print('\n'.join(["prints all string representation of all instances",
-	"whether specified class or not", 
-	"Usage: ``all BaseModel`` or ``all``"]))
+                        "whether class is specified or not",
+                         "Usage: ``all BaseModel`` or ``all``"]))
 
     # OVERRIDEN METHODS
     def do_quit(self, qt):
@@ -143,6 +147,6 @@ class HBNBCommand(cmd.Cmd):
     """quit in case of EOF from ctr d"""
     do_EOF = do_quit
 
+
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
-
