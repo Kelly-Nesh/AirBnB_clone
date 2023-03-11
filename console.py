@@ -81,6 +81,7 @@ class HBNBCommand(cmd.Cmd):
                 # if class_all == saved_instance.__class__.__name__:
                 rt.append(str(saved_instance))
             print(rt)
+
     def do_update(self, class_update):
         """Updates an instance based on class name and id by adding or updating
         attributes and saves the changes to json file"""
