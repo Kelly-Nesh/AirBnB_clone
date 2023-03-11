@@ -108,6 +108,7 @@ class HBNBCommand(cmd.Cmd):
 
     @staticmethod
     def type_cast(k):
+        """returns the casted value of k according to its type"""
         try:
             k = int(k)
         except ValueError:
@@ -127,17 +128,20 @@ class HBNBCommand(cmd.Cmd):
 
     # HELP METHODS
     def help_show(self):
+        """Prints a help doc of the command show"""
         print('\n'.join(["Takes two arguments: Class and Instance Id",
                          "Usage: ``\
                          show BaseModel <id>``"]))
 
     def help_destroy(self):
+        """Prints a help doc of the command destroy"""
         print('\n'.join(["Deletes an instance based on the \
                         class name and id and saves changes.",
                         "Usage: \
                         ``destroy BaseModel <id>``"]))
 
     def help_all(self):
+        """Prints a help doc of the command all"""
         print('\n'.join(["\tprints all string representation of all instances",
                         "\twhether class is specified or not",
                          "\t\tUsage: ``all BaseModel`` or ``all``"]))
