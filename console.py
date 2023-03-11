@@ -50,7 +50,7 @@ class HBNBCommand(cmd.Cmd):
         class_destroy = class_destroy.split(' ')
         if not class_destroy[0]:
             print("** class name missing **")
-        elif class_destroy[0] != "BaseModel":
+        elif class_destroy[0] not in classes:
             print("** class doesn't exist **")
         elif len(class_destroy) < 2:
             print("** instance id missing **")
