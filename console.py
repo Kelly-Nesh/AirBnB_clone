@@ -82,7 +82,7 @@ class HBNBCommand(cmd.Cmd):
         saved = models.storage.all()
         if not class_update[0]:
             print("** class name missing **")
-        elif class_update[0] != "BaseModel":
+        elif class_update[0] not in classes:
             print("** class doesn't exist **")
         elif len(class_update) < 2:
             print("** instance id missing **")
@@ -91,17 +91,12 @@ class HBNBCommand(cmd.Cmd):
         elif len(class_update) < 4:
             print("** value missing **")
         else:
-            # class.id
             key = class_update[0] + '.' + class_update[1]
-            eval(class_update[0])
-            print(type(class_update[0]))
-            # saved = all stored objects
             if key not in saved:
                 print("** no instance found **")
                 return
-            # accessed the stored object for the specific class.id
             stored = saved[key]
-            stored.__dict__[class_update[3]] = class_update[4]
+            setattr(stored, class_update[2], class_update[3])
             models.storage.save()
 
     @staticmethod
