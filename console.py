@@ -67,14 +67,20 @@ class HBNBCommand(cmd.Cmd):
     def do_all(self, class_all):
         """Prints all string representations of instances based or
         not on the class name."""
+        stored = models.storage.all().values()
         rt = []
         if not class_all:
-            for m in models.storage.all().values():
+            for m in stored:
                 rt.append(str(m))
             print(rt)
         elif class_all not in classes:
             print("** class doesn't exist **")
-
+        else:
+            for saved_instance in stored:
+                # for later when we need to show for the exact class
+                # if class_all == saved_instance.__class__.__name__:
+                rt.append(str(saved_instance))
+            print(rt)
     def do_update(self, class_update):
         """Updates an instance based on class name and id by adding or updating
         attributes and saves the changes to json file"""
@@ -131,9 +137,9 @@ class HBNBCommand(cmd.Cmd):
                         ``destroy BaseModel <id>``"]))
 
     def help_all(self):
-        print('\n'.join(["prints all string representation of all instances",
-                        "whether class is specified or not",
-                         "Usage: ``all BaseModel`` or ``all``"]))
+        print('\n'.join(["\tprints all string representation of all instances",
+                        "\twhether class is specified or not",
+                         "\t\tUsage: ``all BaseModel`` or ``all``"]))
 
     # OVERRIDEN METHODS
     def do_quit(self, qt):
