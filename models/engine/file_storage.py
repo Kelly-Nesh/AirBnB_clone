@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 import json
+import models
+import os
 """Serializing and deserializing a class. Saving json to file"""
 
 
@@ -15,26 +17,38 @@ class FileStorage:
 
     def all(self):
         """returns the dictionary __objects"""
-        return self.__class__.__objects
+        return FileStorage.__objects
 
     def new(self, obj):
         """sets in __objects the obj with key object id"""
-        self.all()[obj.id] = obj.to_dict()
+        key = obj.__class__.__name__ + '.' + obj.id
+        self.__objects[key] = obj
 
     def save(self):
         """serializes __objects to the JSON file (path: __file_path)"""
+        objects_dict = {}
+        for key, val in FileStorage.__objects.items():
+            objects_dict[key] = val.to_dict()
+
         with open(type(self).__file_path, 'w', encoding='utf-8') as jsf:
-            jsf.write(json.dumps(type(self).__objects))
+            jsf.write(json.dumps(objects_dict))
 
     def reload(self):
         """deserializes the JSON file to __objects (only if the JSON file
         (__file_path) exists ; otherwise, do nothing.
         If the file doesn’t exist, no exception should be raised)"""
-        if type(self).__file_path:
+        if FileStorage.__file_path:
             try:
                 with open(type(self).__file_path, 'r', encoding='utf-8') as jsf:
-                    jsf_line = jsf.readline()
+                    try:
+                        FileStorage.__objects = json.load(jsf)
+                    except json.decoder.JSONDecodeError:
+                        os.remove(FileStorage.__file_path)
+                        return
             except FileNotFoundError:
                 pass
             else:
-                type(self).__objects = json.loads(jsf_line)
+                for key, val in FileStorage.__objects.items():
+                    class_name = val["__class__"]
+                    class_name = models.classes[class_name]
+                    FileStorage.__objects[key] = class_name(**val)
