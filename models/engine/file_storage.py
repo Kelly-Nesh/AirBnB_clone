@@ -7,6 +7,14 @@ import models
 
 
 class FileStorage:
+    """
+     Serializes instances to a JSON file and deserializes JSON file to
+     instances:
+
+     Attrs:
+        __file_path: (str) filepath to json file storing model instances
+        __objects: (dict): contains new and reloaded model instances
+     """
     __file_path = "file.json"
     __objects = {}
 
@@ -33,11 +41,11 @@ class FileStorage:
         with open(self.__file_path, "w", encoding="utf-8") as js:
             dump = json.dumps(dumpdict)
             js.write(dump)
-
     def reload(self):
         """
         deserializes the JSON file to __objects (only if the JSON file
         """
+        self.__objects.clear()
         if os.path.exists(self.__file_path):
             with open(self.__file_path, "r", encoding="utf-8") as js:
                 dump = js.readline()
