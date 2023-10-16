@@ -41,6 +41,7 @@ class FileStorage:
         with open(self.__file_path, "w", encoding="utf-8") as js:
             dump = json.dumps(dumpdict)
             js.write(dump)
+
     def reload(self):
         """
         deserializes the JSON file to __objects (only if the JSON file
