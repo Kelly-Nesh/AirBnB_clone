@@ -3,7 +3,8 @@
 
 from models.engine.file_storage import FileStorage
 from models.base_model import BaseModel
+from models import user
 
-mdcls = {"BaseModel": BaseModel}
+mdcls = {"BaseModel": BaseModel, "User": user.User}
 storage = FileStorage()
 storage.reload()
