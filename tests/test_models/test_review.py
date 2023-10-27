@@ -6,11 +6,13 @@ import re
 from datetime import datetime
 from models.review import Review
 
+
 class TestReview(unittest.TestCase):
     def setUp(self):
         self.review = Review()
         self.name = "Toilet"
         self.review.save()
+
     def test_str_not_none(self):
         self.assertIsNotNone(self.review.__str__())
 
@@ -32,7 +34,7 @@ class TestReview(unittest.TestCase):
 
     def test_save_updated_at(self):
         self.review.save()
-        save_1 = self.review.updated_at 
+        save_1 = self.review.updated_at
         self.review.save()
         save_2 = self.review.updated_at
         self.assertLess(save_1, save_2)

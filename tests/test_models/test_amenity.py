@@ -6,11 +6,13 @@ import re
 from datetime import datetime
 from models.amenity import Amenity
 
+
 class TestAmenity(unittest.TestCase):
     def setUp(self):
         self.amenity = Amenity()
         self.name = "Toilet"
         self.amenity.save()
+
     def test_str_not_none(self):
         self.assertIsNotNone(self.amenity.__str__())
 
@@ -32,7 +34,7 @@ class TestAmenity(unittest.TestCase):
 
     def test_save_updated_at(self):
         self.amenity.save()
-        save_1 = self.amenity.updated_at 
+        save_1 = self.amenity.updated_at
         self.amenity.save()
         save_2 = self.amenity.updated_at
         self.assertLess(save_1, save_2)

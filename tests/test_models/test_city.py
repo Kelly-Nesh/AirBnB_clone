@@ -6,11 +6,13 @@ import re
 from datetime import datetime
 from models.city import City
 
+
 class TestCity(unittest.TestCase):
     def setUp(self):
         self.city = City()
         self.name = "Toilet"
         self.city.save()
+
     def test_str_not_none(self):
         self.assertIsNotNone(self.city.__str__())
 
@@ -32,7 +34,7 @@ class TestCity(unittest.TestCase):
 
     def test_save_updated_at(self):
         self.city.save()
-        save_1 = self.city.updated_at 
+        save_1 = self.city.updated_at
         self.city.save()
         save_2 = self.city.updated_at
         self.assertLess(save_1, save_2)
