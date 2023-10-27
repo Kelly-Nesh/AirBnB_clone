@@ -26,16 +26,66 @@ class HBNBCommand(cmd.Cmd):
             print(str(models.storage.all().get(key,
                 "** no instance found **")))
     def do_destroy(self, args):
-        if self.check_args("show", args):
+        if self.check_args("destroy", args):
             args = args.split(" ")
             key = args[0] + "." + args[1]
             #models.storage.reload()
             models.storage.all().pop(key,
                 "** no instance found **")
             models.storage.save()
-    def do_all(self):
-       pass 
+    def do_all(self, args):
+        all_models = models.storage.all()
+        strings = []
+        if not args:
+            for i in all_models.values():
+                strings.append(str(i))
+            print(strings)
+        else:
+            args = args.split(" ")
+            for key, value in all_models.items():
+                model_class = key.split(".")[0]
+                if model_class == args[0]:
+                    strings.append(str(value))
+            print(strings)
 
+    def do_update(self, args):
+        if not self.check_args("update", args):
+            return
+        args = args.split(" ")
+        key = args[0] + "." + args[1]
+        if key not in models.storage.all().keys():
+            print("** no instance found **")
+        elif len(args) < 3:
+            print("** attribute name missing **")
+        elif len(args) < 4:
+            print("** value missing **")
+        else:
+            model_update = models.storage.all()[key]
+            model_update.__dict__[args[2]] = self.type_cast(args[3])
+            models.storage.save()
+            print(model_update.__dict__, models.storage.all()[key], sep="\n\n")
+
+
+
+    @staticmethod
+    def type_cast(k):
+        """Returns k according to its type"""
+        try:
+            k = int(k)
+        except ValueError:
+            try:
+                k = float(k)
+            except ValueError:
+                try:
+                    k = str(k)
+                except ValueError:
+                    pass
+                else:
+                    return k
+            else:
+                return k
+        else:
+            return k
 
 
     @staticmethod
