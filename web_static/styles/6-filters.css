@@ -48,6 +48,8 @@ section.filters div.amenitites ul.popover {
     list-style: none;
     padding-top: 20px;
     padding-bottom: 20px;
+    z-index: 1;
+    position: relative;
 }
 section.filters div.locations:hover .popover,
 section.filters div.amenitites:hover .popover {
