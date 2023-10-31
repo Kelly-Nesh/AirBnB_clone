@@ -13,6 +13,33 @@ class HBNBCommand(cmd.Cmd):
     """
     prompt = "(hbnb) "
 
+    def parseline(self, line):
+        split_line = line.split("(")
+        if len(split_line) < 2:
+            return cmd.Cmd.parseline(self, line)
+        new_line = self.set_args(split_line)
+        return cmd.Cmd.parseline(self, new_line)
+
+    @staticmethod
+    def set_args(args: list) -> str:
+        mdl, comd = args[0].split(".")
+        dot = " ".join([comd, mdl])
+        args[-1] = args[-1][:-1]
+        args[0] = dot
+        newline = " ".join(args)
+        return newline
+
+    def do_count(self, args):
+        if self.check_args("count", args):
+            all_models = models.storage.all()
+            args = args.split(" ")
+            strings = []
+            for key, value in all_models.items():
+                model_class = key.split(".")[0]
+                if model_class == args[0]:
+                    strings.append(str(value))
+            print(len(strings))
+
     def do_create(self, args):
         if self.check_args("create", args):
             self.model = models.mdcls[args]()
